@@ -1,0 +1,55 @@
+{
+  "version": 2,
+  "name": "multichain-sniper-pro",
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/next"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/telegram/webhook",
+      "dest": "/api/telegram/webhook"
+    },
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/$1"
+    }
+  ],
+  "env": {
+    "TELEGRAM_BOT_TOKEN": "7587979044:AAHF1ML8S-_TL9eAuZTnatO1ugodjaFCQEo",
+    "TELEGRAM_WEBHOOK_SECRET": "multichain_sniper_webhook_secret_2024"
+  },
+  "functions": {
+    "app/api/telegram/webhook/route.ts": {
+      "maxDuration": 30
+    },
+    "app/api/trades/route.ts": {
+      "maxDuration": 30
+    }
+  },
+  "headers": [
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        },
+        {
+          "key": "Access-Control-Allow-Methods",
+          "value": "GET, POST, PUT, DELETE, OPTIONS"
+        },
+        {
+          "key": "Access-Control-Allow-Headers",
+          "value": "Content-Type, Authorization"
+        }
+      ]
+    }
+  ]
+}
